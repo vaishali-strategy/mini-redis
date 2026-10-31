@@ -1,13 +1,13 @@
 CXX      := clang++
 SAN      :=
-CXXFLAGS := -std=c++23 -Wall -Wextra -O2 -Isrc -MMD -MP $(SAN)
+CXXFLAGS := -std=c++23 -Wall -Wextra -O2 -Iinclude -MMD -MP $(SAN)
 BUILD    := build
 SERVER   := server
 
 CORE_SRC := src/resp.cpp src/store.cpp src/commands.cpp
 CORE_OBJ := $(CORE_SRC:src/%.cpp=$(BUILD)/%.o)
 SRV_OBJ  := $(BUILD)/server.o $(BUILD)/main.o
-HEADERS  := $(wildcard src/*.hpp)
+HEADERS  := $(wildcard include/*.hpp)
 TESTS    := resp heap lru store
 TEST_BIN := $(TESTS:%=$(BUILD)/test_%)
 

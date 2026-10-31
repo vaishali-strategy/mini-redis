@@ -64,7 +64,8 @@ therefore **repurposed from "build" to "own"**:
 
 ```
 mini-redis/
-  src/        main.cpp server.cpp resp.cpp store.cpp heap.hpp lru.hpp
+  include/    resp.hpp heap.hpp lru.hpp store.hpp commands.hpp server.hpp
+  src/        main.cpp server.cpp resp.cpp store.cpp commands.cpp
   tests/      test_resp.cpp test_heap.cpp test_lru.cpp test_protocol.py
   Makefile
   README.md

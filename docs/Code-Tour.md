@@ -25,19 +25,22 @@ code from "someone else's" to "yours". Do them in order. Stage 4 is the one that
 # 1. The map of the project (11 source files, about 900 lines)
 
 ```
-src/
-  resp.hpp / resp.cpp          bytes <-> commands and replies          (no sockets)
-  heap.hpp                     indexed min-heap: which key expires next
-  lru.hpp                      doubly linked list: which key to evict
-  store.hpp / store.cpp        map + heap + list, kept consistent
-  commands.hpp / commands.cpp  "GET a" -> store call -> reply          (no sockets)
-  server.hpp / server.cpp      sockets, poll() loop, per-client buffers
+include/                       headers: what each part promises
+  resp.hpp  heap.hpp  lru.hpp  store.hpp  commands.hpp  server.hpp
+src/                           implementations
+  resp.cpp                     bytes <-> commands and replies          (no sockets)
+  store.cpp                    map + heap + list, kept consistent
+  commands.cpp                 "GET a" -> store call -> reply          (no sockets)
+  server.cpp                   sockets, poll() loop, per-client buffers
   main.cpp                     reads --port and --max-keys, starts the server
 tests/
   test_resp.cpp  test_heap.cpp  test_lru.cpp  test_store.cpp   unit + randomised tests
   test_protocol.py                                             real server, real sockets
   bench.sh                                                     throughput numbers
 ```
+
+`heap.hpp` and `lru.hpp` are header-only because they are templates: the whole implementation
+lives in `include/`. The compiler is told where to find headers with `-Iinclude`.
 
 Only `server.cpp` touches the network. Everything else is plain logic you can test without a
 socket. That separation is a design point you should be able to explain.
