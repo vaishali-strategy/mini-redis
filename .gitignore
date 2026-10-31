@@ -1,0 +1,7 @@
+server
+build/
+*.o
+*.dSYM/
+.DS_Store
+~$*
+build-asan/
